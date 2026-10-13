@@ -1,0 +1,30 @@
+{
+  "name": "captcha-solver",
+  "displayName": "Captcha Solver",
+  "version": "1.0.0",
+  "description": "Solve captchas and bot challenges (Turnstile, reCAPTCHA, hCaptcha, Cloudflare, AWS WAF, DataDome, PerimeterX, Akamai, Aliyun, Arkose, BotGuard) through a self-hosted captcha-solver service.",
+  "author": { "name": "Jamie" },
+  "keywords": ["captcha", "turnstile", "recaptcha", "hcaptcha", "cloudflare", "browser-automation"],
+  "userConfig": {
+    "solver_url": {
+      "type": "string",
+      "title": "Solver URL",
+      "description": "Base URL of the captcha-solver API.",
+      "default": "https://api-solver.jamiejam.nl",
+      "required": true
+    },
+    "api_token": {
+      "type": "string",
+      "title": "API token",
+      "description": "Bearer token for the solver API (SOLVER_API_TOKEN in the service's .solver-token.env).",
+      "sensitive": true,
+      "required": true
+    },
+    "api_host": {
+      "type": "string",
+      "title": "Host header override",
+      "description": "Only needed when Solver URL is a local address and the service uses host isolation (e.g. api-solver.jamiejam.nl with http://127.0.0.1:8877). Leave empty otherwise.",
+      "default": ""
+    }
+  }
+}

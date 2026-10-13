@@ -1,0 +1,51 @@
+{
+  "manifest_version": "0.3",
+  "name": "captcha-solver",
+  "display_name": "Captcha Solver",
+  "version": "1.0.0",
+  "description": "Solve captchas and bot challenges (Turnstile, reCAPTCHA, hCaptcha, Cloudflare, AWS WAF and more) through a self-hosted captcha-solver service.",
+  "long_description": "Gives the agent a solve_captcha tool that calls the captcha-solver /solve endpoint and a solver_status tool that checks the service. The API token is stored by the host, not shown to the model.",
+  "author": { "name": "captcha-solver" },
+  "server": {
+    "type": "python",
+    "entry_point": "server/solver_mcp.py",
+    "mcp_config": {
+      "command": "python3",
+      "args": ["${__dirname}/server/solver_mcp.py"],
+      "env": {
+        "SOLVER_URL": "${user_config.solver_url}",
+        "SOLVER_API_TOKEN": "${user_config.api_token}",
+        "SOLVER_API_HOST": "${user_config.api_host}"
+      }
+    }
+  },
+  "user_config": {
+    "solver_url": {
+      "type": "string",
+      "title": "Solver URL",
+      "description": "Base URL of the captcha-solver service.",
+      "default": "https://api-solver.jamiejam.nl",
+      "required": true
+    },
+    "api_token": {
+      "type": "string",
+      "title": "API token",
+      "description": "Bearer token for the solver (SOLVER_API_TOKEN in the service's .solver-token.env).",
+      "sensitive": true,
+      "required": true
+    },
+    "api_host": {
+      "type": "string",
+      "title": "API Host header",
+      "description": "Only when the service uses host isolation (SOLVER_API_HOST set on the server). Leave empty otherwise.",
+      "default": "",
+      "required": false
+    }
+  },
+  "tools": [
+    { "name": "solve_captcha", "description": "Solve a captcha or bot challenge and return the token or clearance." },
+    { "name": "solver_status", "description": "Check that the solver is up and list running tasks." }
+  ],
+  "compatibility": { "platforms": ["darwin", "win32", "linux"], "runtimes": { "python": ">=3.9" } },
+  "license": "See repository"
+}

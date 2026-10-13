@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "captcha-solver": {
+      "command": "python3",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/server/solver_mcp.py"],
+      "env": {
+        "SOLVER_URL": "${user_config.solver_url}",
+        "SOLVER_API_TOKEN": "${user_config.api_token}",
+        "SOLVER_API_HOST": "${user_config.api_host}"
+      }
+    }
+  }
+}
