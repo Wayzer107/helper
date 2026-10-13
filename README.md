@@ -6,6 +6,7 @@ Claude integrations for your self-hosted verification service:
 |---|---|---|
 | `plugins/helper/` | Claude Code | MCP server (`assist_challenge`, `helper_status`), `solver-api` reference skill, `/helper:status`, verification challenge hooks |
 | `plugins/helper/skills/helper-in-browser/` | Claude Code and standalone agents | Automatically discoverable browser skill; also packaged as a standalone ZIP |
+| `skills/helper-in-browser/` | Standalone agents | Separate source for the browser skill; copy this directory or install its ZIP |
 | `mcpb/` | Claude Desktop | MCPB bundle manifest. **[Download helper.mcpb](https://github.com/Wayzer107/helper/releases/latest/download/helper.mcpb)** |
 
 Supported challenge types: Turnstile, Google widget (v2/v3/invisible, Enterprise), human widget,
@@ -51,7 +52,7 @@ Turn them off with `/plugin` → helper → disable, or remove
 
 ```bash
 git clone https://github.com/Wayzer107/helper
-cp -r helper/plugins/helper/skills/helper-in-browser ~/.claude/skills/
+cp -r helper/skills/helper-in-browser ~/.claude/skills/
 ```
 
 The skill expects the `assist_challenge` tool, so install the plugin or the MCPB
@@ -76,7 +77,10 @@ The marketplace, plugin and MCP server are named `helper`. The tools are
 `assist_challenge` and `helper_status`; commands are `/helper:status`,
 `/helper:solver-api` and `/helper:helper-in-browser`. The browser and API-reference
 skills remain eligible for automatic discovery; status is an explicit command.
-The browser skill is included in the plugin installation as well as the ZIP.
+The browser skill is included in the plugin installation and also remains
+separate at `skills/helper-in-browser/`. The build copies this standalone source
+into the plugin and packages it as `helper-in-browser.zip`. The two copies must
+remain identical; the tests enforce that.
 
 `google-widget` and `human-widget` are public dispatch aliases. The server maps
 them to the service's required wire identifiers before forwarding a request.

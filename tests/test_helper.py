@@ -38,6 +38,8 @@ class HelperTests(unittest.TestCase):
             text=(PLUGIN/'skills'/skill/'SKILL.md').read_text(encoding='utf-8')
             self.assertIn('name: '+skill,text)
             if skill!='status':self.assertNotIn('disable-model-invocation: true',text)
+        self.assertEqual((ROOT/'skills/helper-in-browser/SKILL.md').read_bytes(),
+            (PLUGIN/'skills/helper-in-browser/SKILL.md').read_bytes())
         hooks=json.loads((PLUGIN/'hooks/hooks.json').read_text())['hooks']
         for entries in hooks.values():
             for entry in entries:
