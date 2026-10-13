@@ -1,12 +1,12 @@
 {
-  "name": "captcha-solver",
+  "name": "helper",
   "owner": { "name": "Jamie" },
-  "description": "Self-hosted captcha-solver integration for Claude Code",
+  "description": "Self-hosted helper integration for Claude Code",
   "plugins": [
     {
-      "name": "captcha-solver",
-      "source": "./plugins/captcha-solver",
-      "description": "Solve captchas and bot challenges through your captcha-solver service"
+      "name": "helper",
+      "source": "./plugins/helper",
+      "description": "Solve verification challenge and bot challenges through your helper service"
     }
   ]
 }

@@ -1,0 +1,21 @@
+{
+  "description": "Point the model at assist_challenge when a browser tool hits a verification challenge, and block hand-clicking verification challenge widgets",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "^mcp__.*(playwright|chrome|browser)",
+        "hooks": [
+          { "type": "command", "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/detect_challenge.py\"", "timeout": 10 }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "^mcp__.*(playwright|chrome|browser)",
+        "hooks": [
+          { "type": "command", "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/guard_challenge_click.py\"", "timeout": 10 }
+        ]
+      }
+    ]
+  }
+}

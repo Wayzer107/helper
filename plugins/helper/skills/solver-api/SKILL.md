@@ -1,11 +1,11 @@
 ---
 name: solver-api
-description: Field-by-field reference for the captcha-solver `solve_captcha` tool — which fields each captcha type needs, what the response contains, and how cookie-bound results must be replayed. Load before building a solve_captcha request or interpreting its result.
+description: Field-by-field reference for the helper `assist_challenge` tool — which fields each verification challenge type needs, what the response contains, and how cookie-bound results must be replayed. Load before building a assist_challenge request or interpreting its result.
 ---
 
-# captcha-solver API reference
+# helper API reference
 
-The `solve_captcha` tool forwards its arguments to `POST /solve` on the solver.
+The `assist_challenge` tool forwards its arguments to `POST /solve` on the solver.
 Anything not listed as a named argument goes in `extra`.
 
 ## Required fields per type
@@ -13,8 +13,8 @@ Anything not listed as a named argument goes in `extra`.
 | `type` | Required | Useful optional | Main output |
 |---|---|---|---|
 | `turnstile` | `url`, `sitekey` | `action`, `cdata`, `real_page`, `verify_url`+`verify_payload` | `token` |
-| `recaptcha` | `url`, `sitekey` | `version` (`v2` default, `v3`, `invisible`), `enterprise`, `action` (v3/invisible), `secret` (v3 score), `real_page`, `classifier` | `token` (+ `score`) |
-| `hcaptcha` | `url`, `sitekey` | `action: "invisible"`, `real_page` | `token` |
+| `google-widget` | `url`, `sitekey` | `version` (`v2` default, `v3`, `invisible`), `enterprise`, `action` (v3/invisible), `secret` (v3 score), `real_page`, `classifier` | `token` (+ `score`) |
+| `human-widget` | `url`, `sitekey` | `action: "invisible"`, `real_page` | `token` |
 | `cloudflare` | `url` | `proxy` | `cf_clearance`, `cookies`, `user_agent`, `headers` |
 | `awswaf` | `url` | `proxy` | `token` / `aws_waf_token`, `cookies`, `user_agent` |
 | `datadome` | `url` (the DataDome-fronted page) | `referer`, `proxy` | `datadome` cookie, `cookies`, `user_agent` |
@@ -24,7 +24,7 @@ Anything not listed as a named argument goes in `extra`.
 | `arkose` | `public_key`, `page_url` | `surl`, `max_waves` | `fc_token` |
 | `botguard` | `email` | `password` (hard-gate token) | `bgRequest` token |
 
-- `url` is always the **top-level page** the user would see, never the captcha iframe's URL.
+- `url` is always the **top-level page** the user would see, never the verification challenge iframe's URL.
 - `timeout_s` defaults to 60. Raise to 90–120 for image challenges, Arkose or `real_page`.
 - `proxy` is `scheme://user:pass@host:port`, per request only.
 
@@ -35,15 +35,15 @@ Anything not listed as a named argument goes in `extra`.
    - `400` bad input (missing `sitekey`, unsupported type, SSRF-blocked private URL) → fix the request.
    - `408` exceeded `timeout_s` → retry with a larger timeout, up to 4 times.
    - `422` schema error → `detail` lists the bad fields.
-   - `500` solver crashed (often a browser launch failure) → call `solver_status`, report it; do not retry in a loop.
+   - `500` solver crashed (often a browser launch failure) → call `helper_status`, report it; do not retry in a loop.
 
 ## Token lifetimes
 
 Tokens are single-use and short-lived. Use them immediately.
 
 - Turnstile: ~300 s (`expires_in`).
-- reCAPTCHA: ~120 s.
-- hCaptcha: ~120 s.
+- Google widget: ~120 s.
+- human widget: ~120 s.
 - `cf_clearance`: typically 15–30 min.
 - `_px3`: short; replay within its TTL.
 

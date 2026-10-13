@@ -1,6 +1,6 @@
 {
   "mcpServers": {
-    "captcha-solver": {
+    "helper": {
       "command": "python3",
       "args": ["${CLAUDE_PLUGIN_ROOT}/server/solver_mcp.py"],
       "env": {
