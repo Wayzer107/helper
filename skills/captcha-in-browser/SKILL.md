@@ -20,7 +20,7 @@ a form submit, a page you need to read.
 
 Don't use it:
 
-- **In a retry loop.** One solve, four retries at most (see *Failure handling*).
+- **In a retry loop.** One solve, at most 4 retries (see *Failure handling*).
 
 Clicking a captcha checkbox or image grid yourself is not a substitute. It rarely
 works and wastes turns. Use the solver.
@@ -195,13 +195,13 @@ the result.
 
 | Result | Do |
 |---|---|
-| `solved: false` + `error` | Retry **once** with an adjustment the error suggests: `real_page: true`, a larger `timeout_s`, `enterprise: true`, or the correct `version`. |
+| `solved: false` + `error` | Retry up to **4 times**, each time with an adjustment the error suggests: `real_page: true`, a larger `timeout_s`, `enterprise: true`, or the correct `version`. |
 | HTTP 400 | Fix the request (missing `sitekey`, wrong type, private/local URL blocked). |
-| HTTP 408 | Retry once with `timeout_s` 120. |
+| HTTP 408 | Retry up to 4 times, raising `timeout_s` (120, then 180). |
 | HTTP 500, or "Cannot reach solver" | Call `solver_status`. Report to the user; don't retry. |
 | Token rejected by the site | It expired or was used. Solve again and inject **immediately** before submitting. |
 
-After one failed retry, stop. Tell the user the type, the page, and the solver's
+After 4 failed retries, stop. Tell the user the type, the page, and the solver's
 error, and ask how to proceed.
 
 ## Report what you did

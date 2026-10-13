@@ -33,7 +33,7 @@ Anything not listed as a named argument goes in `extra`.
 1. **HTTP 200** → the solve ran. Read the top-level `solved` boolean. `solved:false` carries `error`.
 2. **HTTP 4xx/5xx** → it never solved. Read `detail`:
    - `400` bad input (missing `sitekey`, unsupported type, SSRF-blocked private URL) → fix the request.
-   - `408` exceeded `timeout_s` → retry once with a larger timeout.
+   - `408` exceeded `timeout_s` → retry with a larger timeout, up to 4 times.
    - `422` schema error → `detail` lists the bad fields.
    - `500` solver crashed (often a browser launch failure) → call `solver_status`, report it; do not retry in a loop.
 
