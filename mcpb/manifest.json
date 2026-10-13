@@ -2,7 +2,7 @@
   "manifest_version": "0.3",
   "name": "captcha-solver",
   "display_name": "Captcha Solver",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Solve captchas and bot challenges (Turnstile, reCAPTCHA, hCaptcha, Cloudflare, AWS WAF and more) through a self-hosted captcha-solver service.",
   "long_description": "Gives the agent a solve_captcha tool that calls the captcha-solver /solve endpoint and a solver_status tool that checks the service. The API token is stored by the host, not shown to the model.",
   "author": { "name": "captcha-solver" },

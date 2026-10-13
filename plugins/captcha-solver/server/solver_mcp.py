@@ -19,7 +19,7 @@ import urllib.error
 import urllib.request
 
 PROTOCOL_VERSION = "2025-06-18"
-SERVER_INFO = {"name": "captcha-solver", "version": "1.0.0"}
+SERVER_INFO = {"name": "captcha-solver", "version": "1.1.0"}
 
 SOLVER_URL = os.environ.get("SOLVER_URL", "https://api-solver.jamiejam.nl").rstrip("/")
 API_TOKEN = os.environ.get("SOLVER_API_TOKEN", "")

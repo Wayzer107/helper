@@ -1,7 +1,7 @@
 {
   "name": "captcha-solver",
   "displayName": "Captcha Solver",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Solve captchas and bot challenges (Turnstile, reCAPTCHA, hCaptcha, Cloudflare, AWS WAF, DataDome, PerimeterX, Akamai, Aliyun, Arkose, BotGuard) through a self-hosted captcha-solver service.",
   "author": { "name": "Jamie" },
   "keywords": ["captcha", "turnstile", "recaptcha", "hcaptcha", "cloudflare", "browser-automation"],
